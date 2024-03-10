@@ -6,6 +6,7 @@ public class Generator {
 
     public static Integer generateId() {
 
-        return idCounter++;
+        idCounter++;
+        return idCounter;
     }
 }

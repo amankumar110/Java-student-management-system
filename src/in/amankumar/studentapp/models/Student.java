@@ -3,7 +3,7 @@ package in.amankumar.studentapp.models;
 import java.io.Serializable;
 import java.time.LocalDate;
 
-public class Student implements Serializable {
+public class Student implements Serializable{
 
     private Integer id;
     private String name;

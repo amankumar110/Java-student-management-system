@@ -10,6 +10,7 @@ import in.amankumar.studentapp.services.student.StudentService;
 import in.amankumar.studentapp.services.student.impl.StudentServiceImpl;
 import in.amankumar.studentapp.utils.Validator;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -18,7 +19,7 @@ import java.util.Scanner;
 
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException, ClassNotFoundException {
 
         String choice;
 
@@ -94,24 +95,52 @@ public class Main {
                     break;
 
                 case "4":
-                    break;
-                case "5":
 
                     System.out.println("Enter the Id of the Student: ");
-                    Integer id = null;
+                    Integer updateId = null;
 
                     try {
-                         id = Integer.valueOf(scanner.next());
+                        updateId = Integer.valueOf(scanner.nextLine());
                     } catch(NumberFormatException e) {
-                        System.out.println("Invalid ID was Provided: "+id);
+                        System.out.println("Invalid ID was Provided: "+updateId);
                         break;
                     }
 
-                     Student deletedStudent = studentService.deleteStudent(id);
-                    if(deletedStudent!=null)
-                        System.out.println("Student with ID("+id+") Deleted Successfully");
+                    StudentDTO updateStudentDTO = new StudentDTO();
 
-                     break;
+                    System.out.println("Enter the name of student: ");
+                    updateStudentDTO.setName(scanner.nextLine());
+
+                    System.out.println("Enter the grade of student: ");
+                    updateStudentDTO.setGrade(scanner.nextLine());
+
+                    System.out.println("Enter the age of student: ");
+                    updateStudentDTO.setAge(scanner.nextLine());
+
+                    System.out.println("Enter the date of birth of student in (DD-MM-YYYY) format: ");
+                    updateStudentDTO.setDOB(scanner.nextLine());
+
+                    Student updatedStudent = studentService.updateStudent(updateId,updateStudentDTO);
+
+                    if(updatedStudent!=null)
+                        System.out.println(updateStudentDTO.getName()+" was updated");
+                    break;
+                case "5":
+                    System.out.println("Enter the Id of the Student: ");
+                    Integer deleteId = null;
+
+                    try {
+                        deleteId = Integer.parseInt(scanner.nextLine());
+                        Student deletedStudent = studentService.deleteStudent(deleteId);
+                        if (deletedStudent != null) {
+                            System.out.println("Student with ID(" + deletedStudent.getId() + ") Deleted Successfully");
+                        } else {
+                            System.out.println("Student with ID(" + deleteId + ") Not Found");
+                        }
+                    } catch (NumberFormatException e) {
+                        System.out.println("Invalid ID was Provided: " + deleteId);
+                    }
+                    break;
                 case "6":
                     System.exit(0);
                     break;

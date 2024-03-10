@@ -6,6 +6,8 @@ import in.amankumar.studentapp.repositories.student.StudentRepository;
 import in.amankumar.studentapp.services.student.StudentService;
 import in.amankumar.studentapp.utils.Generator;
 import in.amankumar.studentapp.utils.Validator;
+
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -20,7 +22,7 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public Student addStudent(StudentDTO studentDTO) {
+    public Student addStudent(StudentDTO studentDTO) throws IOException, ClassNotFoundException {
 
         if(!isStudentValid(studentDTO)) {
             return null;
@@ -35,19 +37,19 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public List<Student> findAllStudents() {
+    public List<Student> findAllStudents() throws IOException, ClassNotFoundException {
 
         return this.studentRepository.findAllStudents();
     }
 
     @Override
-    public Student findStudentByName(String name) {
+    public Student findStudentByName(String name) throws IOException, ClassNotFoundException {
 
         return this.studentRepository.findStudentByName(name);
     }
 
     @Override
-    public Student updateStudent(Integer id, StudentDTO studentDTO) {
+    public Student updateStudent(Integer id, StudentDTO studentDTO) throws IOException, ClassNotFoundException {
 
         Student foundStudent = this.studentRepository.findStudentById(id);
         if (foundStudent == null) {
@@ -68,9 +70,10 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public Student deleteStudent(Integer id) {
+    public Student deleteStudent(Integer id) throws IOException, ClassNotFoundException {
 
         Student foundStudent = this.studentRepository.findStudentById(id);
+
         if (foundStudent == null) {
             System.out.println("Student not found with Id: "+id);
             return null;
